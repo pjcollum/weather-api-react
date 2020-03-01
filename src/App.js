@@ -23,7 +23,9 @@ class App extends React.Component {
     const api_call = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}`);
 
     const data = await api_call.json();
-    console.log(data);
+    
+    if (city && country){     //both fields need to be filled to click button
+      console.log(data);
     
     this.setState({
       temperature: data.main.temp,
@@ -33,7 +35,17 @@ class App extends React.Component {
       description: data.weather[0].description,
       error: ""
     })
+    } else {
+      this.setState({
+        temperature: undefined,
+        city: undefined,
+        country: undefined,
+        humidity: undefined,
+        description: undefined,
+        error: "Please enter the value.",
+    });
     
+    }
   }
 
   render() {
